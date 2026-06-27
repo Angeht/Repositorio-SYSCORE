@@ -9,7 +9,7 @@
             </span>
         </a>
 
-        <div class="hidden items-center gap-8 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500 lg:flex">
+        <div class="hidden items-center gap-6 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500 lg:flex">
             <a href="{{ route('home') }}" class="transition hover:text-cyan-300">Inicio</a>
             <a href="{{ route('us') }}" class="transition hover:text-cyan-300">Nosotros</a>
             <a href="{{ route('services') }}" class="transition hover:text-cyan-300">Servicios</a>
@@ -18,8 +18,14 @@
             <a href="{{ route('contact') }}" class="transition hover:text-cyan-300">Contacto</a>
         </div>
 
-        <a href="{{ route('contact') }}" class="hidden rounded-md border border-cyan-400/30 px-4 py-2 text-xs font-bold text-cyan-300 shadow-[0_0_20px_rgba(34,211,238,.08)] transition hover:border-cyan-300 hover:bg-cyan-400/10 md:inline-flex">
-            Contacto
-        </a>
+        <div class="hidden items-center gap-3 md:flex">
+            <a href="{{ route('join') }}" class="rounded-md bg-cyan-400 px-4 py-2 text-xs font-black text-[#05111f] shadow-[0_0_24px_rgba(34,211,238,.22)] transition hover:bg-cyan-300">
+                Unete
+            </a>
+
+            <a href="{{ route('login') }}" class="rounded-md border border-cyan-400/30 px-4 py-2 text-xs font-bold text-cyan-300 shadow-[0_0_20px_rgba(34,211,238,.08)] transition hover:border-cyan-300 hover:bg-cyan-400/10">
+                Iniciar sesion
+            </a>
+        </div>
     </nav>
 </header>

@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Livewire\Admin;
+
+use App\Models\SiteContent;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
+
+class Dashboard extends Component
+{
+    public $contents;
+
+    public ?int $editingId = null;
+
+    public string $page = '';
+
+    public string $section = '';
+
+    public string $title = '';
+
+    public string $subtitle = '';
+
+    public string $body = '';
+
+    public string $button_text = '';
+
+    public string $button_url = '';
+
+    public string $items = '';
+
+    public function mount(): void
+    {
+        $this->loadContents();
+        $this->edit($this->contents->first()?->id);
+    }
+
+    public function loadContents(): void
+    {
+        $this->contents = SiteContent::query()
+            ->orderBy('page')
+            ->orderBy('sort_order')
+            ->orderBy('section')
+            ->get();
+    }
+
+    public function edit(?int $id): void
+    {
+        if (! $id) {
+            return;
+        }
+
+        $content = SiteContent::findOrFail($id);
+
+        $this->editingId = $content->id;
+        $this->page = $content->page;
+        $this->section = $content->section;
+        $this->title = $content->title ?? '';
+        $this->subtitle = $content->subtitle ?? '';
+        $this->body = $content->body ?? '';
+        $this->button_text = $content->button_text ?? '';
+        $this->button_url = $content->button_url ?? '';
+        $this->items = json_encode($content->items ?? [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    public function save(): void
+    {
+        $validated = $this->validate([
+            'title' => ['nullable', 'string', 'max:255'],
+            'subtitle' => ['nullable', 'string', 'max:255'],
+            'body' => ['nullable', 'string'],
+            'button_text' => ['nullable', 'string', 'max:255'],
+            'button_url' => ['nullable', 'string', 'max:255'],
+            'items' => ['nullable', 'json'],
+        ]);
+
+        $content = SiteContent::findOrFail($this->editingId);
+        $content->update([
+            'title' => $validated['title'] ?: null,
+            'subtitle' => $validated['subtitle'] ?: null,
+            'body' => $validated['body'] ?: null,
+            'button_text' => $validated['button_text'] ?: null,
+            'button_url' => $validated['button_url'] ?: null,
+            'items' => $validated['items'] ? json_decode($validated['items'], true) : [],
+        ]);
+
+        $this->loadContents();
+        session()->flash('status', 'Contenido actualizado correctamente.');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect()->route('login');
+    }
+
+    public function render()
+    {
+        return view('livewire.admin.dashboard');
+    }
+}

@@ -4,18 +4,18 @@
     <main class="px-5 pb-24 pt-36">
         <section class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.8fr_1fr]">
             <div>
-                <p class="mb-4 text-xs font-bold uppercase tracking-[0.35em] text-cyan-300">Contacto</p>
+                <p class="mb-4 text-xs font-bold uppercase tracking-[0.35em] text-cyan-300">{{ $content['subtitle'] ?: 'Contacto' }}</p>
                 <h1 class="text-5xl font-black tracking-tight text-white md:text-7xl">
-                    Hablemos de tu sistema.
+                    {{ $content['title'] }}
                 </h1>
                 <p class="mt-8 text-lg leading-8 text-slate-400">
-                    Cuentanos que proceso quieres mejorar y revisamos como convertirlo en una solucion digital.
+                    {{ $content['body'] }}
                 </p>
 
                 <div class="mt-10 space-y-4 text-slate-400">
-                    <p><span class="font-bold text-cyan-300">Correo:</span> contacto@syscore.dev</p>
-                    <p><span class="font-bold text-cyan-300">Ubicacion:</span> Colombia</p>
-                    <p><span class="font-bold text-cyan-300">Respuesta:</span> 24 a 48 horas</p>
+                    <p><span class="font-bold text-cyan-300">Correo:</span> {{ $content['items']['email'] ?? 'contacto@syscore.dev' }}</p>
+                    <p><span class="font-bold text-cyan-300">Ubicacion:</span> {{ $content['items']['location'] ?? 'Colombia' }}</p>
+                    <p><span class="font-bold text-cyan-300">Respuesta:</span> {{ $content['items']['response'] ?? '24 a 48 horas' }}</p>
                 </div>
             </div>
 
