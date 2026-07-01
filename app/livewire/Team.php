@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Livewire\Concerns\LoadsSiteContent;
+use App\Models\Equipo;
 use Livewire\Component;
 
 class Team extends Component
@@ -13,6 +14,7 @@ class Team extends Component
     {
         return view('livewire.team', [
             'content' => $this->content('team'),
+            'miembros' => Equipo::activos()->get(),
         ]);
     }
 }

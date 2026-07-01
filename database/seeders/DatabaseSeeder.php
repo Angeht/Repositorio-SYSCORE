@@ -112,6 +112,15 @@ class DatabaseSeeder extends Seeder
                 'items' => ['Laravel', 'Livewire', 'PHP', 'MySQL', 'Tailwind CSS', 'JavaScript', 'Git', 'Vite'],
                 'sort_order' => 1,
             ],
+              [
+                'page' => 'equipo',
+                'section' => 'main',
+                'title' => 'Stack de desarrollo.',
+                'subtitle' => 'Tecnologias',
+                'body' => 'Usamos herramientas modernas para construir sistemas rapidos, escalables y faciles de mantener.',
+                'items' => ['Laravel', 'Livewire', 'PHP', 'MySQL', 'Tailwind CSS', 'JavaScript', 'Git', 'Vite'],
+                'sort_order' => 1,
+            ],
             [
                 'page' => 'team',
                 'section' => 'main',
