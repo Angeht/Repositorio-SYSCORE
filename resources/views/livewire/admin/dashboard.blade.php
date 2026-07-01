@@ -34,7 +34,17 @@
                         <span class="mt-1 block text-sm font-semibold">{{ $content->section }}</span>
                     </button>
                 @endforeach
+
+                <a href="{{ route('admin.equipo') }}"
+        class="flex w-full items-center rounded-md bg-white/[0.03] px-4 py-3 text-left text-slate-300 transition hover:bg-cyan-400/10 hover:text-cyan-200">
+        <div>
+            <span class="block text-xs font-black uppercase tracking-[0.2em]">equipo</span>
+            <span class="mt-1 block text-sm font-semibold">miembros</span>
+        </div>
+    </a>
             </div>
+
+           
         </aside>
 
         <section class="rounded-md border border-cyan-400/10 bg-[#07101f] p-6 md:p-8">
