@@ -64,6 +64,12 @@ class Dashboard extends Component
 
     public function save(): void
     {
+        if (! $this->editingId) {
+            $this->addError('title', 'Selecciona un contenido para editar.');
+
+            return;
+        }
+
         $validated = $this->validate([
             'title' => ['nullable', 'string', 'max:255'],
             'subtitle' => ['nullable', 'string', 'max:255'],
@@ -73,7 +79,16 @@ class Dashboard extends Component
             'items' => ['nullable', 'json'],
         ]);
 
-        $content = SiteContent::findOrFail($this->editingId);
+        $content = SiteContent::find($this->editingId);
+
+        if (! $content) {
+            $this->addError('title', 'El contenido seleccionado ya no existe.');
+            $this->loadContents();
+            $this->edit($this->contents->first()?->id);
+
+            return;
+        }
+
         $content->update([
             'title' => $validated['title'] ?: null,
             'subtitle' => $validated['subtitle'] ?: null,
@@ -90,8 +105,11 @@ class Dashboard extends Component
     public function logout()
     {
         Auth::logout();
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
+
+        if (request()->hasSession()) {
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+        }
 
         return redirect()->route('login');
     }
