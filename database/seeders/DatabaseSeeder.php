@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\SiteContent;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,14 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::updateOrCreate(
-            ['email' => 'admin@syscore.dev'],
-            [
-                'name' => 'Administrador SysCore',
-                'password' => 'admin12345',
-                'role' => 'admin',
-            ]
-        );
+        $this->call(UserRoleSeeder::class);
 
         foreach ($this->siteContents() as $content) {
             SiteContent::updateOrCreate(

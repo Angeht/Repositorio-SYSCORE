@@ -14,7 +14,7 @@
 
                 <div class="mt-10 space-y-4 text-slate-400">
                     <p><span class="font-bold text-cyan-300">Correo:</span> {{ $content['items']['email'] ?? 'contacto@syscore.dev' }}</p>
-                    <p><span class="font-bold text-cyan-300">Ubicacion:</span> {{ $content['items']['location'] ?? 'Colombia' }}</p>
+                    <p><span class="font-bold text-cyan-300">Ubicacion:</span> {{ $content['items']['location'] ?? 'Perú' }}</p>
                     <p><span class="font-bold text-cyan-300">Respuesta:</span> {{ $content['items']['response'] ?? '24 a 48 horas' }}</p>
                 </div>
             </div>
