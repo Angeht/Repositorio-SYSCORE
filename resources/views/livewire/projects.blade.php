@@ -17,10 +17,13 @@
             </div>
 
             <div class="mt-14 grid gap-7 lg:grid-cols-3">
+                @if (!$content['items'])
+                    <p class="text-slate-400 text-white">Proyectos en desarrollo</p>
+                @endif
                 @foreach ($content['items'] as $project)
                     <article class="group overflow-hidden rounded-md border border-cyan-400/10 bg-white/[0.03]">
                         <div class="flex h-52 items-center justify-center bg-[linear-gradient(135deg,rgba(34,211,238,.18),rgba(15,23,42,.65)),linear-gradient(rgba(34,211,238,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,.08)_1px,transparent_1px)] bg-[size:auto,28px_28px,28px_28px]">
-                            <span class="px-6 text-center text-4xl font-black text-cyan-300/80 transition group-hover:scale-105">{{ $project['titulo'] }}</span>
+                            <span class="px-6 text-center text-4xl font-black text-cyan-300/80 transition group-hover:scale-105">{{ $project['titulo']}}</span>
                         </div>
                         <div class="p-6">
                             <p class="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300">{{ $project['tipo'] }}</p>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\librerias;
 use App\Models\SiteContent;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,7 +16,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call([
+            LibreriasSeeder::class,
+            LibreriasCssSeeder::class,
+            LenguajesSeeder::class,
+            ProjectsSeeder::class,
+            ProjectsLengSeeder::class,
+            ProjectsLibrecssSeeder::class,
+            ProjectsLibreSeeder::class,
+        ]);
+
+        User::updateOrCreate(
+            ['email' => 'admin@syscore.dev'],
+            [
+                'name' => 'Administrador SysCore',
+                'password' => 'admin12345',
+                'role' => 'admin',
+            ]
+        );
+
         $this->call(RoleSeeder::class);
+
 
         foreach ($this->siteContents() as $content) {
             SiteContent::firstOrCreate(
