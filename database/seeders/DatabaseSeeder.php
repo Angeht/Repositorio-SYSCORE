@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\librerias;
 use App\Models\SiteContent;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,7 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         $this->call([
             LibreriasSeeder::class,
             LibreriasCssSeeder::class,
@@ -37,8 +35,11 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        $this->call(RoleSeeder::class);
+
+
         foreach ($this->siteContents() as $content) {
-            SiteContent::updateOrCreate(
+            SiteContent::firstOrCreate(
                 ['page' => $content['page'], 'section' => $content['section']],
                 $content
             );
@@ -61,6 +62,32 @@ class DatabaseSeeder extends Seeder
                     'description' => 'Analizamos, disenamos y desarrollamos sistemas funcionales orientados a necesidades reales, desde el levantamiento de requerimientos hasta el soporte en produccion.',
                 ],
                 'sort_order' => 1,
+            ],
+            [
+                'page' => 'home',
+                'section' => 'quick_links',
+                'title' => 'Explora SysCore',
+                'subtitle' => 'Accesos principales',
+                'body' => 'Conoce servicios, proyectos y tecnologias sin perder el enfoque del inicio.',
+                'items' => [
+                    ['titulo' => 'Servicios', 'texto' => 'Aplicaciones web, sistemas internos y sitios corporativos.', 'ruta' => '/servicios'],
+                    ['titulo' => 'Proyectos', 'texto' => 'Soluciones digitales pensadas para procesos reales.', 'ruta' => '/proyectos'],
+                    ['titulo' => 'Tecnologias', 'texto' => 'Laravel, Livewire, PHP, MySQL, Tailwind CSS y mas.', 'ruta' => '/tecnologias'],
+                ],
+                'sort_order' => 2,
+            ],
+            [
+                'page' => 'home',
+                'section' => 'metrics',
+                'title' => 'Procesos con estructura, codigo con proposito.',
+                'subtitle' => 'Impacto',
+                'body' => 'Medimos cada solucion por claridad, mantenimiento y utilidad real para el usuario final.',
+                'items' => [
+                    ['numero' => '06+', 'texto' => 'Modulos base'],
+                    ['numero' => '03', 'texto' => 'Areas de trabajo'],
+                    ['numero' => '24/7', 'texto' => 'Vision de soporte'],
+                ],
+                'sort_order' => 3,
             ],
             [
                 'page' => 'us',
@@ -104,6 +131,28 @@ class DatabaseSeeder extends Seeder
                 'subtitle' => 'Tecnologias',
                 'body' => 'Usamos herramientas modernas para construir sistemas rapidos, escalables y faciles de mantener.',
                 'items' => ['Laravel', 'Livewire', 'PHP', 'MySQL', 'Tailwind CSS', 'JavaScript', 'Git', 'Vite'],
+                'sort_order' => 1,
+            ],
+              [
+                'page' => 'equipo',
+                'section' => 'main',
+                'title' => 'Stack de desarrollo.',
+                'subtitle' => 'Tecnologias',
+                'body' => 'Usamos herramientas modernas para construir sistemas rapidos, escalables y faciles de mantener.',
+                'items' => ['Laravel', 'Livewire', 'PHP', 'MySQL', 'Tailwind CSS', 'JavaScript', 'Git', 'Vite'],
+                'sort_order' => 1,
+            ],
+            [
+                'page' => 'team',
+                'section' => 'main',
+                'title' => 'Equipo SysCore.',
+                'subtitle' => 'Equipo',
+                'body' => 'Un equipo enfocado en analizar, disenar, desarrollar y mejorar soluciones digitales.',
+                'items' => [
+                    ['nombre' => 'Integrante 1', 'rol' => 'Backend Developer', 'texto' => 'Laravel, base de datos y logica del sistema.'],
+                    ['nombre' => 'Integrante 2', 'rol' => 'Frontend Developer', 'texto' => 'Interfaces, experiencia de usuario y estilos.'],
+                    ['nombre' => 'Integrante 3', 'rol' => 'Analista', 'texto' => 'Requerimientos, documentacion y pruebas funcionales.'],
+                ],
                 'sort_order' => 1,
             ],
             [

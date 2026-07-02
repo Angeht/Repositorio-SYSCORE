@@ -13,6 +13,8 @@ class Home extends Component
     {
         return view('livewire.home', [
             'hero' => $this->content('home', 'hero'),
+            'quickLinks' => $this->content('home', 'quick_links'),
+            'metrics' => $this->content('home', 'metrics'),
         ]);
     }
 }

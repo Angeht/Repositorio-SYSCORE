@@ -15,6 +15,7 @@
             <a href="{{ route('services') }}" class="transition hover:text-cyan-300">Servicios</a>
             <a href="{{ route('projects') }}" class="transition hover:text-cyan-300">Proyectos</a>
             <a href="{{ route('technologies') }}" class="transition hover:text-cyan-300">Tecnologias</a>
+            <a href="{{ route('team') }}" class="transition hover:text-cyan-300">Equipo</a>
             <a href="{{ route('contact') }}" class="transition hover:text-cyan-300">Contacto</a>
         </div>
 

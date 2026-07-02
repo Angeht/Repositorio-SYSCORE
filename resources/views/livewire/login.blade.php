@@ -23,7 +23,7 @@
                     Esta pantalla queda lista para conectar la autenticacion real de administradores.
                 </p>
 
-                <form wire:submit="login" class="mt-10">
+                <form wire:submit.prevent="login" class="mt-10">
                     <label class="block text-sm font-bold text-slate-300" for="email">Correo</label>
                     <input id="email" wire:model="email" type="email" placeholder="admin@syscore.dev" class="mt-3 w-full rounded-md border border-cyan-400/10 bg-black/20 px-4 py-4 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300">
                     @error('email')
