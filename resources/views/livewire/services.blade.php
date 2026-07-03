@@ -8,13 +8,81 @@
                 {{ $content['title'] }}
             </h1>
 
-            <div class="mt-14 grid gap-6 md:grid-cols-3">
-                @foreach ($content['items'] as $service)
-                    <article class="rounded-md border border-cyan-400/10 bg-[#07101f] p-7 transition hover:border-cyan-300/40 hover:bg-[#081629]">
-                        <div class="mb-8 h-1 w-12 rounded-full bg-cyan-400"></div>
-                        <h2 class="text-2xl font-black text-white">{{ $service['titulo'] }}</h2>
-                        <p class="mt-5 leading-7 text-slate-400">{{ $service['texto'] }}</p>
-                    </article>
+            <div class="mt-14 flex justify-center">
+
+                @php
+                    $items = $content['items'] ?? [];
+                    $current = $items[$active] ?? null;
+                    $next = $items[$active + 1] ?? $items[0] ?? null;
+                @endphp
+
+                <div class="mt-14 grid md:grid-cols-2 gap-6 items-center">
+
+                    @if ($current)
+                        <article
+                            wire:key="service-{{ $active }}"
+                            class="rounded-md border border-cyan-400/20 bg-[#07101f] p-8
+                            transition-all duration-300 ease-in-out
+                            scale-105 transition-all duration-300 animate-focus-in"
+                        >
+                            <div class="mb-6 h-1 w-12 rounded-full bg-cyan-400"></div>
+
+                            <h2 class="text-3xl font-black text-white">
+                                {{ $current['titulo'] }}
+                            </h2>
+
+                            <p class="mt-5 leading-7 text-slate-300 text-lg">
+                                {{ $current['texto'] }}
+                            </p>
+                        </article>
+                    @endif
+
+                    @if ($next)
+                        <article
+                            class="rounded-md border border-cyan-400/10 bg-[#07101f] p-6
+                            scale-95 opacity-60 transition-all duration-300"
+                        >
+                            <div class="mb-6 h-1 w-10 rounded-full bg-cyan-400/40"></div>
+
+                            <h2 class="text-2xl font-bold text-white">
+                                {{ $next['titulo'] }}
+                            </h2>
+
+                            <p class="mt-4 leading-6 text-slate-400">
+                                {{ $next['texto'] }}
+                            </p>
+                        </article>
+                    @endif
+
+                </div>
+
+            </div>
+            <div class="mt-10 flex items-center justify-center gap-6">
+                <button
+                    wire:click="prev"
+                    class="rounded-md border border-cyan-400/20 px-4 py-2 text-cyan-300 hover:bg-cyan-400/10"
+                >
+                    ←
+                </button>
+
+                <button
+                    wire:click="next"
+                    class="rounded-md border border-cyan-400/20 px-4 py-2 text-cyan-300 hover:bg-cyan-400/10"
+                >
+                    →
+                </button>
+            </div>
+            @php
+                $items = $content['items'] ?? [];
+            @endphp
+
+            <div class="mt-6 flex justify-center gap-2">
+                @foreach ($items as $index => $item)
+                    <div
+                        wire:click="$set('active', {{ $index }})"
+                        class="h-2 w-2 cursor-pointer rounded-full transition-all
+                        {{ $active === $index ? 'bg-cyan-400 w-4' : 'bg-cyan-400/30' }}"
+                    ></div>
                 @endforeach
             </div>
         </section>
