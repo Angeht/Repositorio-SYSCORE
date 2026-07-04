@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id('idproject');
             $table->string('title');
             $table->string('img');
+            $table->string('formato');
+            $table->string('ruta');
             $table->string('link');
             $table->string('descripcion', 1000);
             $table->timestamps();

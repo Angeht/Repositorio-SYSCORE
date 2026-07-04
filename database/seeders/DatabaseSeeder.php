@@ -106,7 +106,7 @@ class DatabaseSeeder extends Seeder
             [
                 'page' => 'projects',
                 'section' => 'main',
-                'title' => 'Soluciones destacadas.',
+                'title' => 'Transformamos ideas en proyectos funcionales, modernos y escalables.',
                 'subtitle' => 'Proyectos',
                 'body' => 'Proyectos pensados para optimizar operaciones, centralizar datos y mejorar decisiones.',
                 'items' => [

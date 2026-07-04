@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-[#030712] text-slate-100">
+admin@syscore.devadmin@syscore.devadmin@syscore.dev<div class="min-h-screen bg-[#030712] text-slate-100">
     @include('partials.navigation')
 
     <main class="px-5 pb-24 pt-36">
