@@ -26,12 +26,5 @@ Route::get('/unete', Join::class)->name('join');
 Route::get('/iniciar-sesion', Login::class)->name('login');
 Route::get('/admin', Dashboard::class)->middleware(['auth', 'admin'])->name('admin.dashboard');
 
-
-
-
-/* All about Projects */
-
-/*  */
-
 Route::get('/admin/equipo', EquipoAdmin::class)->middleware(['auth', 'admin'])->name('admin.equipo');
 

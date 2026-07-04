@@ -6,5 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class librerias extends Model
 {
-    //
+    protected $table = 'librerias';
+
+    protected $primaryKey = 'idlibreria';
+
+    public $incrementing = true;
+    
+    protected $keyType = 'int';
+
+    protected $fillable = [
+        'descripcion_libreria'
+    ];
+
+    public function projects()
+    {
+        return $this->belongsToMany(
+            project::class,
+            'projects_libres',
+            'fr_projects',
+            'fr_librerias',
+            'idproject',
+            'idlibreria'
+        );
+    }
 }
