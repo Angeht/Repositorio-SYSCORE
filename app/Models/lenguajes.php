@@ -16,6 +16,8 @@ class lenguajes extends Model
 
     protected $fillable = [
         'descripcion_lenguaje',
+        'formato_lenguaje',
+        'ruta_lenguaje',
     ];
 
     public function projects()

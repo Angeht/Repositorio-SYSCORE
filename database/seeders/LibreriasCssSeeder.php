@@ -25,9 +25,34 @@ class LibreriasCssSeeder extends Seeder
             'Skeleton',
         ];
 
-        foreach ($libreriasCss as $css) {
+        $formato = [
+            'ico',
+            'png',
+            'png',
+            'png',
+            'png',
+            'webp',
+            'png',
+            'png',
+            'webp'
+        ];
+        $ruta = [
+            'img/libreriascss/bootstrap.ico',
+            'img/libreriascss/tailwind.png',
+            'img/libreriascss/Materialize.png',
+            'img/libreriascss/Bulma.png',
+            'img/libreriascss/Foundation.png',
+            'img/libreriascss/semanticui.webp',
+            'img/libreriascss/Uikit.png',
+            'img/libreriascss/PureCss.png',
+            'img/libreriascss/skeleton.webp'
+        ];
+
+        foreach ($libreriasCss as $i => $css) {
             $libreiaCss = new librerias_css();
             $libreiaCss->descripcion_libreriacss=$css;
+            $libreiaCss->formato_libreriacss=$formato[$i];
+            $libreiaCss->ruta_libreriacss=$ruta[$i];
             $libreiaCss->save();
         }
     }

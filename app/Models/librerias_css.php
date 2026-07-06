@@ -16,6 +16,8 @@ class librerias_css extends Model
 
     protected $fillable = [
         'descripcion_libreriacss',
+        'formato_libreriacss',
+        'ruta_libreriacss',
     ];
 
     public function projects()

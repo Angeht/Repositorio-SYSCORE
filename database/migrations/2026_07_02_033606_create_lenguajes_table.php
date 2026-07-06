@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('lenguajes', function (Blueprint $table) {
             $table->id('idlenguaje');
             $table->string('descripcion_lenguaje', 100);
+            $table->string('formato_lenguaje', 100);
+            $table->string('ruta_lenguaje', 100);
             $table->timestamps();
         });
     }

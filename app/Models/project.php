@@ -11,6 +11,8 @@ class project extends Model
     protected $fillable = [
         'title',
         'img',
+        'formato',
+        'ruta',
         'link',
         'descripcion'
     ];

@@ -15,6 +15,9 @@ class librerias extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
+        'descripcion_libreria',
+        'formato_libreria',
+        'ruta_libreria',
         'descripcion_libreria'
     ];
 

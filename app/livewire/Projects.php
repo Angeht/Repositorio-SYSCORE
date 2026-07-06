@@ -8,17 +8,21 @@ use App\Models\librerias;
 use App\Models\librerias_css;
 use App\Models\project;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Projects extends Component
 {
+
+    use WithPagination;
+
     use LoadsSiteContent;
 
     public $lenguajes = [];
-    public $lenguajeSeleccionado;
+    public $lenguajeSeleccionado = [];
     public $librerias = [];
-    public $libreriaSeleccionada;
+    public $libreriaSeleccionada = [];
     public $libreriascss = [];
-    public $libreriacssSeleccionada;
+    public $libreriacssSeleccionada = [];
 
     public function mount()
     {
@@ -31,26 +35,47 @@ class Projects extends Component
     {
         $projects = project::query()
             ->when($this->lenguajeSeleccionado, function ($query) {
-                $query->whereHas('lenguajes', function ($q) {
-                    $q->where('idlenguaje', $this->lenguajeSeleccionado);
-                });
+                foreach ($this->lenguajeSeleccionado as $lenguaje) {
+                    $query->whereHas('lenguajes', function ($q) use ($lenguaje) {
+                        $q->where('idlenguaje', $lenguaje);
+                    });
+                }
             })
 
             ->when($this->libreriaSeleccionada, function ($query) {
-                $query->whereHas('librerias', function ($q) {
-                    $q->where('idlibreria', $this->libreriaSeleccionada);
-                });
+                foreach ($this->libreriaSeleccionada as $libreria) {
+                    $query->whereHas('librerias', function ($q) use ($libreria) {
+                        $q->where('idlibreria', $libreria);
+                    });
+                }
             })
             ->when($this->libreriacssSeleccionada, function ($query) {
-                $query->whereHas('libreriascss', function ($q) {
-                    $q->where('idlibreriacss', $this->libreriacssSeleccionada);
-                });
+                foreach ($this->libreriacssSeleccionada as $css) {
+                    $query->whereHas('libreriasCss', function ($q) use ($css) {
+                        $q->where('idlibreriacss', $css);
+                    });
+                }
             })->with(['lenguajes', 'librerias', 'libreriascss'])
-            ->get();
+            ->paginate(1);
 
         return view('livewire.projects', [
             'content' => $this->content('projects'),
             'project' => $projects
         ]);
+    }
+
+    public function updatedLenguajeSeleccionado()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedLibreriaSeleccionada()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedLibreriaCssSeleccionada()
+    {
+        $this->resetPage();
     }
 }
