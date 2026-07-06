@@ -18,6 +18,7 @@ class librerias extends Model
         'descripcion_libreria',
         'formato_libreria',
         'ruta_libreria',
+        'descripcion_libreria'
     ];
 
     public function projects()
