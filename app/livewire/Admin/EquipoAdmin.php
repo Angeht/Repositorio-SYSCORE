@@ -147,9 +147,8 @@ class EquipoAdmin extends Component
     {
         $this->showModal = false;
     }
-
     public function render()
-{
-    return view('livewire.admin.equipo_admin');
-}
+    {
+        return view('livewire.admin.equipo_admin');
+    }
 }

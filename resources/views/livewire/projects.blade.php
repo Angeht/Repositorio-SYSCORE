@@ -26,7 +26,7 @@
                                     <input
                                         type="checkbox"
                                         wire:model.live="lenguajeSeleccionado"
-                                        value="{{ $lenguaje->idlenguaje }}"
+                                        value="{{ $lenguaje['idlenguaje'] }}"
                                         class="peer sr-only">
 
                                     <div
@@ -38,9 +38,9 @@
                            peer-checked:ring-cyan-400">
 
                                         <img
-                                            src="{{ asset('storage/' . $lenguaje->ruta_lenguaje) }}"
-                                            alt="{{ $lenguaje->descripcion_lenguaje }}"
-                                            title="{{ $lenguaje->descripcion_lenguaje }}"
+                                            src="{{ asset('storage/' . $lenguaje['ruta_lenguaje']) }}"
+                                            alt="{{ $lenguaje['descripcion_lenguaje'] }}"
+                                            title="{{ $lenguaje['descripcion_lenguaje'] }}"
                                             class="h-8 w-8 object-contain">
                                     </div>
 
@@ -59,7 +59,7 @@
                                     <input
                                         type="checkbox"
                                         wire:model.live="libreriaSeleccionada"
-                                        value="{{ $lib->idlibreria }}"
+                                        value="{{ $lib['idlibreria'] }}"
                                         class="peer sr-only">
 
                                     <div
@@ -71,9 +71,9 @@
                            peer-checked:ring-cyan-400">
 
                                         <img
-                                            src="{{ asset('storage/' . $lib->ruta_libreria) }}"
-                                            alt="{{ $lib->descripcion_libreria }}"
-                                            title="{{ $lib->descripcion_libreria }}"
+                                            src="{{ asset('storage/' . $lib['ruta_libreria']) }}"
+                                            alt="{{ $lib['descripcion_libreria'] }}"
+                                            title="{{ $lib['descripcion_libreria'] }}"
                                             class="h-8 w-8 object-contain">
 
                                     </div>
@@ -93,7 +93,7 @@
                                     <input
                                         type="checkbox"
                                         wire:model.live="libreriacssSeleccionada"
-                                        value="{{ $css->idlibreriacss }}"
+                                        value="{{ $css['idlibreriacss'] }}"
                                         class="peer sr-only">
 
                                     <div
@@ -105,9 +105,9 @@
                            peer-checked:ring-cyan-400">
 
                                         <img
-                                            src="{{ asset('storage/' . $css->ruta_libreriacss) }}"
-                                            alt="{{ $css->descripcion_libreriacss }}"
-                                            title="{{ $css->descripcion_libreriacss }}"
+                                            src="{{ asset('storage/' . $css['ruta_libreriacss']) }}"
+                                            alt="{{ $css['descripcion_libreriacss'] }}"
+                                            title="{{ $css['descripcion_libreriacss'] }}"
                                             class="h-8 w-8 object-contain">
 
                                     </div>
@@ -120,12 +120,12 @@
                 </div>
 
                 <div class="lg:col-span-2 overflow-hidden">
-                    @if (!$project)
+                    @if (!$Project)
                     <p class="text-slate-400 text-white">Proyectos en desarrollo</p>
                     @endif
 
                     <div class="space-y-8">
-                        @foreach ($project as $pro)
+                        @foreach ($Project as $pro)
 
                         <div class="overflow-hidden rounded-xl border border-cyan-400/20 bg-[#0f172a]
                         shadow-xl shadow-cyan-900/30
@@ -139,17 +139,35 @@
                                 </h2>
                             </div>
 
-                            <div class="h-56 bg-[#111827]">
-                                @if($pro['img'])
-                                <img
-                                    src="{{ asset('storage/' . $pro['ruta']) }}"
-                                    alt="{{ $pro['title'] }}"
-                                    class="h-full w-full object-cover">
-                                @else
-                                <span class="text-cyan-300 text-lg font-semibold">
-                                    Sin imagen
-                                </span>
-                                @endif
+                            <div class="group relative h-56 overflow-hidden bg-[#111827] rounded-lg">
+                                <a href="{{ $pro['link'] }}" target="_blank" rel="noopener noreferrer" class="block h-full w-full">
+                                    @if($pro['img'])
+                                    <img
+                                        src="{{ asset('storage/' . $pro['ruta']) }}"
+                                        alt="{{ $pro['title'] }}"
+                                        class="h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:blur-[2px]">
+                                    <div
+                                        class="absolute inset-0 flex items-center justify-center
+                       bg-black/0 transition-all duration-300
+                       group-hover:bg-black/40">
+
+                                        <span
+                                            class="rounded-lg border border-cyan-400 bg-cyan-500/20 px-4 py-2
+                           text-sm font-semibold text-cyan-300
+                           opacity-0 transition-all duration-300
+                           group-hover:opacity-100">
+
+                                            👆 Click para ver
+
+                                        </span>
+
+                                    </div>
+                                    @else
+                                    <span class="text-cyan-300 text-lg font-semibold">
+                                        Sin imagen
+                                    </span>
+                                    @endif
+                                </a>
                             </div>
 
                             <div class="border-b border-cyan-400/10 p-5">
@@ -158,14 +176,14 @@
                                 </h3>
 
                                 <ul class="flex flex-wrap gap-4">
-                                    @foreach($pro->lenguajes as $lenguaje)
+                                    @foreach($pro['lenguajes'] as $lenguaje)
                                     <li>
                                         <button class="flex items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] p-3 transition hover:border-cyan-400 hover:bg-cyan-500/10">
 
                                             <img
-                                                src="{{ asset('storage/' . $lenguaje->ruta_lenguaje) }}"
-                                                alt="{{ $lenguaje->descripcion_lenguaje }}"
-                                                title="{{ $lenguaje->descripcion_lenguaje }}"
+                                                src="{{ asset('storage/' . $lenguaje['ruta_lenguaje']) }}"
+                                                alt="{{ $lenguaje['descripcion_lenguaje'] }}"
+                                                title="{{ $lenguaje['descripcion_lenguaje'] }}"
                                                 class="h-8 w-8 object-contain">
 
                                         </button>
@@ -176,9 +194,9 @@
                                         <button class="flex items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] p-3 transition hover:border-cyan-400 hover:bg-cyan-500/10">
 
                                             <img
-                                                src="{{ asset('storage/' . $libreria->ruta_libreria) }}"
-                                                alt="{{ $libreria->descripcion_libreria }}"
-                                                title="{{ $libreria->descripcion_libreria }}"
+                                                src="{{ asset('storage/' . $libreria['ruta_libreria']) }}"
+                                                alt="{{ $libreria['descripcion_libreria'] }}"
+                                                title="{{ $libreria['descripcion_libreria'] }}"
                                                 class="h-8 w-8 object-contain">
 
                                         </button>
@@ -189,9 +207,9 @@
                                         <button class="flex items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] p-3 transition hover:border-cyan-400 hover:bg-cyan-500/10">
 
                                             <img
-                                                src="{{ asset('storage/' . $css->ruta_libreriacss) }}"
-                                                alt="{{ $css->descripcion_libreriacss }}"
-                                                title="{{ $css->descripcion_libreriacss }}"
+                                                src="{{ asset('storage/' . $css['ruta_libreriacss']) }}"
+                                                alt="{{ $css['descripcion_libreriacss'] }}"
+                                                title="{{ $css['descripcion_libreriacss'] }}"
                                                 class="h-8 w-8 object-contain">
 
                                         </button>
@@ -206,7 +224,7 @@
                                 </h3>
 
                                 <ul class="space-y-2 text-slate-400">
-                                    @foreach(explode('.', $pro->descripcion) as $item)
+                                    @foreach(explode('.', $pro['descripcion']) as $item)
                                     @if(trim($item) != '')
                                     <li class="flex items-start gap-2">
                                         <span class="mt-1 text-cyan-400">•</span>
@@ -221,7 +239,7 @@
                         @endforeach
 
                         <div class="mt-8">
-                            {{ $project->links() }}
+                            {{ $Project->links() }}
                         </div>
                     </div>
                 </div>

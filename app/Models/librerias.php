@@ -17,19 +17,18 @@ class librerias extends Model
     protected $fillable = [
         'descripcion_libreria',
         'formato_libreria',
-        'ruta_libreria',
-        'descripcion_libreria'
+        'ruta_libreria'
     ];
 
-    public function projects()
+    public function Projects()
     {
         return $this->belongsToMany(
-            project::class,
+            Project::class,
             'projects_libres',
-            'fr_projects',
             'fr_librerias',
-            'idproject',
-            'idlibreria'
+            'fr_projects',
+            'idlibreria',
+            'idproject'
         );
     }
 }

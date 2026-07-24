@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('img');
             $table->string('formato');
             $table->string('ruta');
-            $table->string('link');
+            $table->string('link')->nullable();
             $table->string('descripcion', 1000);
             $table->timestamps();
         });

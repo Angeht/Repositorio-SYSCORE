@@ -25,26 +25,32 @@
 
             <div class="space-y-2">
                 @foreach ($contents as $content)
-                    <button
-                        wire:click="edit({{ $content->id }})"
-                        type="button"
-                        class="w-full rounded-md px-4 py-3 text-left transition {{ $editingId === $content->id ? 'bg-cyan-400 text-[#05111f]' : 'bg-white/[0.03] text-slate-300 hover:bg-cyan-400/10 hover:text-cyan-200' }}"
-                    >
-                        <span class="block text-xs font-black uppercase tracking-[0.2em]">{{ $content->page }}</span>
-                        <span class="mt-1 block text-sm font-semibold">{{ $content->section }}</span>
-                    </button>
+                <button
+                    wire:click="edit({{ $content->id }})"
+                    type="button"
+                    class="w-full rounded-md px-4 py-3 text-left transition {{ $editingId === $content->id ? 'bg-cyan-400 text-[#05111f]' : 'bg-white/[0.03] text-slate-300 hover:bg-cyan-400/10 hover:text-cyan-200' }}">
+                    <span class="block text-xs font-black uppercase tracking-[0.2em]">{{ $content->page }}</span>
+                    <span class="mt-1 block text-sm font-semibold">{{ $content->section }}</span>
+                </button>
                 @endforeach
 
                 <a href="{{ route('admin.equipo') }}"
-        class="flex w-full items-center rounded-md bg-white/[0.03] px-4 py-3 text-left text-slate-300 transition hover:bg-cyan-400/10 hover:text-cyan-200">
-        <div>
-            <span class="block text-xs font-black uppercase tracking-[0.2em]">equipo</span>
-            <span class="mt-1 block text-sm font-semibold">miembros</span>
-        </div>
-    </a>
+                    class="flex w-full items-center rounded-md bg-white/[0.03] px-4 py-3 text-left text-slate-300 transition hover:bg-cyan-400/10 hover:text-cyan-200">
+                    <div>
+                        <span class="block text-xs font-black uppercase tracking-[0.2em]">equipo</span>
+                        <span class="mt-1 block text-sm font-semibold">miembros</span>
+                    </div>
+                </a>
+                <a href="{{ route('admin.proyectos') }}"
+                    class="flex w-full items-center rounded-md bg-white/[0.03] px-4 py-3 text-left text-slate-300 transition hover:bg-cyan-400/10 hover:text-cyan-200">
+                    <div>
+                        <span class="block text-xs font-black uppercase tracking-[0.2em]">proyectos</span>
+                        <span class="mt-1 block text-sm font-semibold">gestionar</span>
+                    </div>
+                </a>
             </div>
 
-           
+
         </aside>
 
         <section class="rounded-md border border-cyan-400/10 bg-[#07101f] p-6 md:p-8">
@@ -60,9 +66,9 @@
             </div>
 
             @if (session('status'))
-                <div class="mb-6 rounded-md border border-cyan-400/20 bg-cyan-400/10 px-4 py-3 text-sm font-bold text-cyan-200">
-                    {{ session('status') }}
-                </div>
+            <div class="mb-6 rounded-md border border-cyan-400/20 bg-cyan-400/10 px-4 py-3 text-sm font-bold text-cyan-200">
+                {{ session('status') }}
+            </div>
             @endif
 
             <form wire:submit="save" class="space-y-5">
@@ -99,7 +105,7 @@
                     <label class="text-sm font-bold text-slate-300">Elementos JSON</label>
                     <textarea wire:model="items" rows="12" class="mt-2 w-full rounded-md border border-cyan-400/10 bg-black/20 px-4 py-3 font-mono text-sm text-white outline-none focus:border-cyan-300"></textarea>
                     @error('items')
-                        <p class="mt-2 text-sm font-semibold text-red-400">{{ $message }}</p>
+                    <p class="mt-2 text-sm font-semibold text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
