@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\EquipoAdmin;
+use App\Livewire\Admin\ProjectsAdmin;
 use App\Livewire\Contact;
 use App\Livewire\Home;
 use App\Livewire\Join;
@@ -27,4 +28,5 @@ Route::get('/iniciar-sesion', Login::class)->name('login');
 Route::get('/admin', Dashboard::class)->middleware(['auth', 'admin'])->name('admin.dashboard');
 
 Route::get('/admin/equipo', EquipoAdmin::class)->middleware(['auth', 'admin'])->name('admin.equipo');
+Route::get('/admin/proyectos', ProjectsAdmin::class)->middleware(['auth', 'admin'])->name('admin.proyectos');
 

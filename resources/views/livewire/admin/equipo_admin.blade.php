@@ -32,6 +32,13 @@
                         <span class="mt-1 block text-sm font-semibold">Miembros</span>
                     </div>
                 </a>
+                <a href="{{ route('admin.proyectos') }}"
+                    class="flex w-full items-center rounded-md bg-white/[0.03] px-4 py-3 text-slate-300 transition hover:bg-cyan-400/10 hover:text-cyan-200">
+                    <div>
+                        <span class="block text-xs font-black uppercase tracking-[0.2em]">proyectos</span>
+                        <span class="mt-1 block text-sm font-semibold">Gestión</span>
+                    </div>
+                </a>
             </div>
         </aside>
 

@@ -20,15 +20,15 @@ class librerias_css extends Model
         'ruta_libreriacss',
     ];
 
-    public function projects()
+    public function Projects()
     {
         return $this->belongsToMany(
-            project::class,
+            Project::class,
             'projects_librecsses',
-            'fr_projects',
             'fr_librerias_csses',
-            'idproject',
-            'idlibreriacss'
+            'fr_projects',
+            'idlibreriacss',
+            'idproject'
         );
     }
 }

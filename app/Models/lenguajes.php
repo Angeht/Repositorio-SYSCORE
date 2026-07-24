@@ -20,15 +20,15 @@ class lenguajes extends Model
         'ruta_lenguaje',
     ];
 
-    public function projects()
+    public function Projects()
     {
         return $this->belongsToMany(
-            project::class,
+            Project::class,
             'projects_lengs',
-            'fr_projects',
             'fr_lenguajes',
-            'idproject',
-            'idlenguaje'
+            'fr_projects',
+            'idlenguaje',
+            'idproject'
         );
     }
 }

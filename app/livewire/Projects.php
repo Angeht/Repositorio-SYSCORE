@@ -6,17 +6,17 @@ use App\Livewire\Concerns\LoadsSiteContent;
 use App\Models\lenguajes;
 use App\Models\librerias;
 use App\Models\librerias_css;
-use App\Models\project;
+use App\Models\Project;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Projects extends Component
 {
-
     use WithPagination;
 
     use LoadsSiteContent;
 
+    /* Propiedades de los filtros */
     public $lenguajes = [];
     public $lenguajeSeleccionado = [];
     public $librerias = [];
@@ -24,6 +24,7 @@ class Projects extends Component
     public $libreriascss = [];
     public $libreriacssSeleccionada = [];
 
+    /* Conexion con la base de datos */
     public function mount()
     {
         $this->lenguajes = lenguajes::all();
@@ -31,9 +32,10 @@ class Projects extends Component
         $this->libreriascss = librerias_css::all();
     }
 
+    /* Método de renderizado */
     public function render()
     {
-        $projects = project::query()
+        $Projects = Project::query()
             ->when($this->lenguajeSeleccionado, function ($query) {
                 foreach ($this->lenguajeSeleccionado as $lenguaje) {
                     $query->whereHas('lenguajes', function ($q) use ($lenguaje) {
@@ -58,12 +60,13 @@ class Projects extends Component
             })->with(['lenguajes', 'librerias', 'libreriascss'])
             ->paginate(1);
 
-        return view('livewire.projects', [
-            'content' => $this->content('projects'),
-            'project' => $projects
+        return view('livewire.Projects', [
+            'content' => $this->content('Projects'),
+            'Project' => $Projects
         ]);
     }
-
+    
+    /* Métodos de actualización de filtros */
     public function updatedLenguajeSeleccionado()
     {
         $this->resetPage();
