@@ -19,16 +19,4 @@ class librerias extends Model
         'formato_libreria',
         'ruta_libreria'
     ];
-
-    public function Projects()
-    {
-        return $this->belongsToMany(
-            Project::class,
-            'projects_libres',
-            'fr_librerias',
-            'fr_projects',
-            'idlibreria',
-            'idproject'
-        );
-    }
 }

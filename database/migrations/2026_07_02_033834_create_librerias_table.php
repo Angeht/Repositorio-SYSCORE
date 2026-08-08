@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('idlibreria');
             $table->string('descripcion_libreria', 100);
             $table->string('formato_libreria', 100);
-            $table->string('ruta_libreria', 100);
+            $table->string('ruta_libreria', 100)->nullable();
             $table->timestamps();
         });
     }

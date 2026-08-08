@@ -12,12 +12,108 @@
             </p>
 
             <div class="mx-auto mt-14 grid max-w-6xl gap-4 sm:grid-cols-2 md:grid-cols-4">
-                @foreach ($content['items'] as $tech)
-                    <div class="rounded-md border border-cyan-400/10 bg-white/[0.03] px-5 py-6 font-black text-slate-200 transition hover:border-cyan-300/40 hover:text-cyan-200">
-                        {{ $tech }}
+
+                {{-- Título --}}
+                <h1 class="col-span-full mb-4 text-center text-3xl font-black uppercase tracking-widest text-cyan-300">
+                    LENGUAJES DE PROGRAMACIÓN
+                </h1>
+
+                {{-- Cards --}}
+                @foreach ($lenguajes as $lenguaje)
+
+                <div class="flex flex-col items-center justify-center rounded-md border border-cyan-400/10
+                bg-white/[0.03] p-5 text-center
+                transition hover:border-cyan-300/40
+                hover:bg-cyan-500/5">
+
+                    {{-- Imagen --}}
+                    <div class="flex aspect-square w-24 items-center justify-center">
+
+                        <img
+                            src="{{ asset('storage/' . $lenguaje['ruta_lenguaje']) }}"
+                            alt="{{ $lenguaje['descripcion_lenguaje'] }}"
+                            title="{{ $lenguaje['descripcion_lenguaje'] }}"
+                            class="h-16 w-16 object-contain">
+
                     </div>
+
+                    {{-- Nombre del lenguaje --}}
+                    <span class="mt-4 text-lg font-bold text-slate-200">
+                        {{ $lenguaje['descripcion_lenguaje'] }}
+                    </span>
+
+                </div>
+
                 @endforeach
+
+                {{-- Título --}}
+                <h1 class="col-span-full mb-4 text-center text-3xl font-black uppercase tracking-widest text-cyan-300">
+                    FRAMEWORKS
+                </h1>
+
+                {{-- Cards --}}
+                @foreach ($librerias as $frameworks)
+
+                <div class="flex flex-col items-center justify-center rounded-md border border-cyan-400/10
+                bg-white/[0.03] p-5 text-center
+                transition hover:border-cyan-300/40
+                hover:bg-cyan-500/5">
+
+                    {{-- Imagen --}}
+                    <div class="flex aspect-square w-24 items-center justify-center">
+
+                        <img
+                            src="{{ asset('storage/' . $frameworks['ruta_libreria']) }}"
+                            alt="{{ $frameworks['descripcion_libreria'] }}"
+                            title="{{ $frameworks['descripcion_libreria'] }}"
+                            class="h-16 w-16 object-contain">
+
+                    </div>
+
+                    {{-- Nombre del frameworks --}}
+                    <span class="mt-4 text-lg font-bold text-slate-200">
+                        {{ $frameworks['descripcion_libreria'] }}
+                    </span>
+
+                </div>
+
+                @endforeach
+
+                {{-- Título --}}
+                <h1 class="col-span-full mb-4 text-center text-3xl font-black uppercase tracking-widest text-cyan-300">
+                    LIBRERIAS CSS
+                </h1>
+
+                {{-- Cards --}}
+                @foreach ($libreriascss as $css)
+
+                <div class="flex flex-col items-center justify-center rounded-md border border-cyan-400/10
+                bg-white/[0.03] p-5 text-center
+                transition hover:border-cyan-300/40
+                hover:bg-cyan-500/5">
+
+                    {{-- Imagen --}}
+                    <div class="flex aspect-square w-24 items-center justify-center">
+
+                        <img
+                            src="{{ asset('storage/' . $css['ruta_libreriacss']) }}"
+                            alt="{{ $css['descripcion_libreriacss'] }}"
+                            title="{{ $css['descripcion_libreriacss'] }}"
+                            class="h-16 w-16 object-contain">
+
+                    </div>
+
+                    {{-- Nombre del css --}}
+                    <span class="mt-4 text-lg font-bold text-slate-200">
+                        {{ $css['descripcion_libreriacss'] }}
+                    </span>
+
+                </div>
+
+                @endforeach
+
             </div>
+
         </section>
     </main>
 

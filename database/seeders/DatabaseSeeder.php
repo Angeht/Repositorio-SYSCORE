@@ -20,9 +20,6 @@ class DatabaseSeeder extends Seeder
             LibreriasCssSeeder::class,
             LenguajesSeeder::class,
             ProjectsSeeder::class,
-            ProjectsLengSeeder::class,
-            ProjectsLibrecssSeeder::class,
-            ProjectsLibreSeeder::class,
         ]);
 
         $this->call(UserRoleSeeder::class);

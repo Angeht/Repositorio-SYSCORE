@@ -19,16 +19,4 @@ class librerias_css extends Model
         'formato_libreriacss',
         'ruta_libreriacss',
     ];
-
-    public function Projects()
-    {
-        return $this->belongsToMany(
-            Project::class,
-            'projects_librecsses',
-            'fr_librerias_csses',
-            'fr_projects',
-            'idlibreriacss',
-            'idproject'
-        );
-    }
 }

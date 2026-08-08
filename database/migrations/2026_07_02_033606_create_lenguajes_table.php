@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('idlenguaje');
             $table->string('descripcion_lenguaje', 100);
             $table->string('formato_lenguaje', 100);
-            $table->string('ruta_lenguaje', 100);
+            $table->string('ruta_lenguaje', 100)->nullable();
             $table->timestamps();
         });
     }

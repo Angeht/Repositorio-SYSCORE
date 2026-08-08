@@ -3,9 +3,6 @@
 namespace App\Livewire;
 
 use App\Livewire\Concerns\LoadsSiteContent;
-use App\Models\lenguajes;
-use App\Models\librerias;
-use App\Models\librerias_css;
 use App\Models\Project;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,69 +13,15 @@ class Projects extends Component
 
     use LoadsSiteContent;
 
-    /* Propiedades de los filtros */
-    public $lenguajes = [];
-    public $lenguajeSeleccionado = [];
-    public $librerias = [];
-    public $libreriaSeleccionada = [];
-    public $libreriascss = [];
-    public $libreriacssSeleccionada = [];
-
-    /* Conexion con la base de datos */
-    public function mount()
-    {
-        $this->lenguajes = lenguajes::all();
-        $this->librerias = librerias::all();
-        $this->libreriascss = librerias_css::all();
-    }
-
     /* Método de renderizado */
     public function render()
     {
         $Projects = Project::query()
-            ->when($this->lenguajeSeleccionado, function ($query) {
-                foreach ($this->lenguajeSeleccionado as $lenguaje) {
-                    $query->whereHas('lenguajes', function ($q) use ($lenguaje) {
-                        $q->where('idlenguaje', $lenguaje);
-                    });
-                }
-            })
-
-            ->when($this->libreriaSeleccionada, function ($query) {
-                foreach ($this->libreriaSeleccionada as $libreria) {
-                    $query->whereHas('librerias', function ($q) use ($libreria) {
-                        $q->where('idlibreria', $libreria);
-                    });
-                }
-            })
-            ->when($this->libreriacssSeleccionada, function ($query) {
-                foreach ($this->libreriacssSeleccionada as $css) {
-                    $query->whereHas('libreriasCss', function ($q) use ($css) {
-                        $q->where('idlibreriacss', $css);
-                    });
-                }
-            })->with(['lenguajes', 'librerias', 'libreriascss'])
-            ->paginate(1);
+            ->paginate(10);
 
         return view('livewire.Projects', [
             'content' => $this->content('Projects'),
             'Project' => $Projects
         ]);
-    }
-    
-    /* Métodos de actualización de filtros */
-    public function updatedLenguajeSeleccionado()
-    {
-        $this->resetPage();
-    }
-
-    public function updatedLibreriaSeleccionada()
-    {
-        $this->resetPage();
-    }
-
-    public function updatedLibreriaCssSeleccionada()
-    {
-        $this->resetPage();
     }
 }
