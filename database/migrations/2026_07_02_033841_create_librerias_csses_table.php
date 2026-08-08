@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('idlibreriacss');
             $table->string('descripcion_libreriacss', 100);
             $table->string('formato_libreriacss', 100);
-            $table->string('ruta_libreriacss', 100);
+            $table->string('ruta_libreriacss', 100)->nullable();
             $table->timestamps();
         });
     }

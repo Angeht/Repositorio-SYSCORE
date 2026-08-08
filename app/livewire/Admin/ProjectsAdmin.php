@@ -3,9 +3,6 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Project;
-use App\Models\lenguajes;
-use App\Models\librerias;
-use App\Models\librerias_css;
 use Livewire\Component;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
@@ -17,9 +14,6 @@ class ProjectsAdmin extends Component
     use WithPagination;
 
     public $Projects;
-    public $lenguajes;
-    public $librerias;
-    public $libreriascss;
 
     /* Propiedades de Project */
     public $title;
@@ -30,11 +24,6 @@ class ProjectsAdmin extends Component
     public $ruta;
     public $link;
     public $ProjectId = null;
-
-    // Relaciones
-    public $lenguajesSeleccionados = [];
-    public $libreriasSeleccionadas = [];
-    public $libreriasCssSeleccionadas = [];
 
     /* Propiedades del Formulario */
     public $showForm = false;
@@ -61,7 +50,7 @@ class ProjectsAdmin extends Component
 
     public function resetForm()
     {
-        $this->reset(['title', 'descripcion', 'img', 'formato', 'ruta', 'link', 'ProjectId', 'lenguajesSeleccionados', 'libreriasSeleccionadas', 'libreriasCssSeleccionadas', 'currentImg']);
+        $this->reset(['title', 'descripcion', 'img', 'formato', 'ruta', 'link', 'ProjectId', 'currentImg']);
     }
 
     /* Metodos de Project */
@@ -70,7 +59,7 @@ class ProjectsAdmin extends Component
         $this->validate([
             'title' => 'required|string|max:255',
             'descripcion' => 'required|string|max:1000',
-            'ruta' => 'required',
+            'ruta' => 'nullable|mimes:jpg,jpeg,png,ico',
             'link' => 'nullable|url',
         ], [
             'title.required' => 'El titulo es obligatorio.',
@@ -84,8 +73,6 @@ class ProjectsAdmin extends Component
             'descripcion' => $this->descripcion,
             'img' => $this->img,
             'formato' => $this->formato,
-            'ruta' => $this->ruta ? 'img/proyecto/' . $this->ruta->getClientOriginalName() : null,
-            'link' => $this->link,
         ];
 
         if ($this->ruta) {
@@ -102,28 +89,14 @@ class ProjectsAdmin extends Component
 
         if ($esEdicion) {
             $ProjectEdit = Project::findOrFail($this->ProjectId);
-             Storage::disk('public')->delete($ProjectEdit->ruta);
+            if ($this->ruta) {
+                if ($ProjectEdit->ruta) {
+                    Storage::disk('public')->delete($ProjectEdit->ruta);
+                }
+            }
             $ProjectEdit->update($data);
-
-            $ProjectEdit->lenguajes()
-                ->sync($this->lenguajesSeleccionados);
-
-            $ProjectEdit->librerias()
-                ->sync($this->libreriasSeleccionadas);
-
-            $ProjectEdit->libreriascss()
-                ->sync($this->libreriasCssSeleccionadas);
         } else {
-            $project = Project::create($data);
-
-            $project->lenguajes()
-                ->sync($this->lenguajesSeleccionados);
-
-            $project->librerias()
-                ->sync($this->libreriasSeleccionadas);
-
-            $project->libreriascss()
-                ->sync($this->libreriasCssSeleccionadas);
+            Project::create($data);
         }
 
         $this->resetForm();
@@ -144,19 +117,6 @@ class ProjectsAdmin extends Component
         $this->currentImg = $Project->ruta;
         $this->link = $Project->link;
 
-        // Cargar checkbox seleccionados
-        $this->lenguajesSeleccionados = $Project->lenguajes
-            ->pluck('idlenguaje')
-            ->toArray();
-
-        $this->libreriasSeleccionadas = $Project->librerias
-            ->pluck('idlibreria')
-            ->toArray();
-
-        $this->libreriasCssSeleccionadas = $Project->libreriascss
-            ->pluck('idlibreriacss')
-            ->toArray();
-
         $this->showForm = true;
     }
 
@@ -165,10 +125,6 @@ class ProjectsAdmin extends Component
         $p = Project::find($id);
         $this->deleteId = $id;
         $this->deleteProject = $p->title;
-        if ($p->lenguajes()->exists() || $p->librerias()->exists()) {
-            $this->mostrarModal('No se puede eliminar este proyecto porque tiene registros relacionados en otras tablas.');
-            return;
-        }
         $this->showDeleteModal = true;
     }
 
@@ -212,16 +168,12 @@ class ProjectsAdmin extends Component
     public function mostrarRegistro()
     {
         $this->Projects = Project::query()
-            ->where('title', 'like', "%{$this->search}%")
-            ->with(['lenguajes', 'librerias', 'libreriascss'])->get();
-        $this->lenguajes = lenguajes::all();
-        $this->librerias = librerias::all();
-        $this->libreriascss = librerias_css::all();
+            ->where('title', 'like', "%{$this->search}%")->get();
     }
 
     /* Método de renderizado */
     public function render()
     {
-        return view('livewire.admin.Projects_admin');
+        return view('livewire.admin.projects_admin');
     }
 }

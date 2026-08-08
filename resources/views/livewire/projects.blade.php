@@ -14,117 +14,13 @@
                     </p>
                 </div>
             </div>
-            <section class="mx-auto max-w-7xl grid gap-7 lg:grid-cols-3">
-                <div class="lg:col-span-1">
-                    <div class="mt-14 grid gap-7 lg:grid-cols-1">
-                        <p class="text-xl font-semibold text-white">Lenguajes de Programacion</p>
-                        <ul class="flex flex-wrap gap-4">
-                            @foreach($lenguajes as $lenguaje)
-                            <li>
-                                <label class="cursor-pointer">
-
-                                    <input
-                                        type="checkbox"
-                                        wire:model.live="lenguajeSeleccionado"
-                                        value="{{ $lenguaje['idlenguaje'] }}"
-                                        class="peer sr-only">
-
-                                    <div
-                                        class="flex aspect-square w-16 items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] transition-all duration-200
-                           hover:border-cyan-400 hover:bg-cyan-500/10
-                           peer-checked:border-cyan-400
-                           peer-checked:bg-cyan-500/20
-                           peer-checked:ring-2
-                           peer-checked:ring-cyan-400">
-
-                                        <img
-                                            src="{{ asset('storage/' . $lenguaje['ruta_lenguaje']) }}"
-                                            alt="{{ $lenguaje['descripcion_lenguaje'] }}"
-                                            title="{{ $lenguaje['descripcion_lenguaje'] }}"
-                                            class="h-8 w-8 object-contain">
-                                    </div>
-
-                                </label>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="mt-14 grid gap-7 lg:grid-cols-1">
-                        <p class="text-xl font-semibold text-white">Frameworks</p>
-                        <ul class="flex flex-wrap gap-4">
-                            @foreach($librerias as $lib)
-                            <li>
-                                <label class="cursor-pointer">
-
-                                    <input
-                                        type="checkbox"
-                                        wire:model.live="libreriaSeleccionada"
-                                        value="{{ $lib['idlibreria'] }}"
-                                        class="peer sr-only">
-
-                                    <div
-                                        class="flex aspect-square w-16 items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] transition-all duration-200
-                           hover:border-cyan-400 hover:bg-cyan-500/10
-                           peer-checked:border-cyan-400
-                           peer-checked:bg-cyan-500/20
-                           peer-checked:ring-2
-                           peer-checked:ring-cyan-400">
-
-                                        <img
-                                            src="{{ asset('storage/' . $lib['ruta_libreria']) }}"
-                                            alt="{{ $lib['descripcion_libreria'] }}"
-                                            title="{{ $lib['descripcion_libreria'] }}"
-                                            class="h-8 w-8 object-contain">
-
-                                    </div>
-
-                                </label>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="mt-14 grid gap-7 lg:grid-cols-1">
-                        <p class="text-xl font-semibold text-white">Frameworks Css</p>
-                        <ul class="flex flex-wrap gap-4">
-                            @foreach($libreriascss as $css)
-                            <li>
-                                <label class="cursor-pointer">
-
-                                    <input
-                                        type="checkbox"
-                                        wire:model.live="libreriacssSeleccionada"
-                                        value="{{ $css['idlibreriacss'] }}"
-                                        class="peer sr-only">
-
-                                    <div
-                                        class="flex aspect-square w-16 items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] transition-all duration-200
-                           hover:border-cyan-400 hover:bg-cyan-500/10
-                           peer-checked:border-cyan-400
-                           peer-checked:bg-cyan-500/20
-                           peer-checked:ring-2
-                           peer-checked:ring-cyan-400">
-
-                                        <img
-                                            src="{{ asset('storage/' . $css['ruta_libreriacss']) }}"
-                                            alt="{{ $css['descripcion_libreriacss'] }}"
-                                            title="{{ $css['descripcion_libreriacss'] }}"
-                                            class="h-8 w-8 object-contain">
-
-                                    </div>
-
-                                </label>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-2 overflow-hidden">
+            <section class="mx-auto max-w-7xl grid gap-4 lg:grid-cols-3">
+                <div class="lg:col-span-3 overflow-hidden">
                     @if (!$Project)
                     <p class="text-slate-400 text-white">Proyectos en desarrollo</p>
                     @endif
 
-                    <div class="space-y-8">
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                         @foreach ($Project as $pro)
 
                         <div class="overflow-hidden rounded-xl border border-cyan-400/20 bg-[#0f172a]
@@ -168,55 +64,6 @@
                                     </span>
                                     @endif
                                 </a>
-                            </div>
-
-                            <div class="border-b border-cyan-400/10 p-5">
-                                <h3 class="mb-3 text-sm font-bold uppercase tracking-widest text-cyan-300">
-                                    Tecnologias
-                                </h3>
-
-                                <ul class="flex flex-wrap gap-4">
-                                    @foreach($pro['lenguajes'] as $lenguaje)
-                                    <li>
-                                        <button class="flex items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] p-3 transition hover:border-cyan-400 hover:bg-cyan-500/10">
-
-                                            <img
-                                                src="{{ asset('storage/' . $lenguaje['ruta_lenguaje']) }}"
-                                                alt="{{ $lenguaje['descripcion_lenguaje'] }}"
-                                                title="{{ $lenguaje['descripcion_lenguaje'] }}"
-                                                class="h-8 w-8 object-contain">
-
-                                        </button>
-                                    </li>
-                                    @endforeach
-                                    @foreach($pro->librerias as $libreria)
-                                    <li>
-                                        <button class="flex items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] p-3 transition hover:border-cyan-400 hover:bg-cyan-500/10">
-
-                                            <img
-                                                src="{{ asset('storage/' . $libreria['ruta_libreria']) }}"
-                                                alt="{{ $libreria['descripcion_libreria'] }}"
-                                                title="{{ $libreria['descripcion_libreria'] }}"
-                                                class="h-8 w-8 object-contain">
-
-                                        </button>
-                                    </li>
-                                    @endforeach
-                                    @foreach($pro->libreriascss as $css)
-                                    <li>
-                                        <button class="flex items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] p-3 transition hover:border-cyan-400 hover:bg-cyan-500/10">
-
-                                            <img
-                                                src="{{ asset('storage/' . $css['ruta_libreriacss']) }}"
-                                                alt="{{ $css['descripcion_libreriacss'] }}"
-                                                title="{{ $css['descripcion_libreriacss'] }}"
-                                                class="h-8 w-8 object-contain">
-
-                                        </button>
-                                    </li>
-                                    @endforeach
-                                </ul>
-
                             </div>
                             <div class="p-5">
                                 <h3 class="mb-3 text-sm font-bold uppercase tracking-widest text-cyan-300">

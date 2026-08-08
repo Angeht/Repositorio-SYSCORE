@@ -33,14 +33,14 @@
                     </div>
                 </a>
                 <a href="{{ route('admin.proyectos') }}"
-                    class="flex w-full items-center rounded-md bg-cyan-400 px-4 py-3 text-[#05111f]">
+                    class="flex w-full items-center rounded-md bg-white/[0.03] px-4 py-3 text-slate-300 transition hover:bg-cyan-400/10 hover:text-cyan-200">
                     <div>
                         <span class="block text-xs font-black uppercase tracking-[0.2em]">proyectos</span>
                         <span class="mt-1 block text-sm font-semibold">Gestión</span>
                     </div>
                 </a>
                 <a href="{{ route('admin.lenguajes') }}"
-                    class="flex w-full items-center rounded-md bg-white/[0.03] px-4 py-3 text-slate-300 transition hover:bg-cyan-400/10 hover:text-cyan-200">
+                    class="flex w-full items-center rounded-md bg-cyan-400 px-4 py-3 text-[#05111f]">
                     <div>
                         <span class="block text-xs font-black uppercase tracking-[0.2em]">lenguajes</span>
                         <span class="mt-1 block text-sm font-semibold">Gestión</span>
@@ -69,12 +69,12 @@
             <div class="mb-8 flex items-center justify-between">
                 <div>
                     <p class="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300">Gestión</p>
-                    <h1 class="mt-3 text-3xl font-black text-white">Proyectos</h1>
+                    <h1 class="mt-3 text-3xl font-black text-white">Lenguajes</h1>
                 </div>
 
                 <button wire:click="toggleForm"
                     class="rounded-md bg-cyan-400 px-5 py-2 text-sm font-black text-[#05111f] transition hover:bg-cyan-300">
-                    {{ $showForm ? '✕ Cancelar' : '+ Agregar Proyecto' }}
+                    {{ $showForm ? '✕ Cancelar' : '+ Agregar Lenguaje' }}
                 </button>
             </div>
 
@@ -82,48 +82,32 @@
             @if ($showForm)
             <div class="mb-8 rounded-md border border-cyan-400/10 bg-black/20 p-5">
                 <p class="mb-4 text-xs font-bold uppercase tracking-widest text-cyan-300">
-                    {{ $ProjectId ? 'Editar proyecto' : 'Nuevo proyecto' }}
+                    {{ $Id ? 'Editar lenguaje' : 'Nuevo lenguaje' }}
                 </p>
 
                 <div class="grid gap-4 sm:grid-cols-2">
                     <div>
-                        <label class="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-500">Titulo</label>
-                        <input type="text" wire:model="title"
+                        <label class="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-500">Lenguaje</label>
+                        <input type="text" wire:model="descripcion_lenguaje"
                             class="w-full rounded-md border border-cyan-400/10 bg-black/20 px-4 py-3 text-white outline-none transition focus:border-cyan-300">
-                        @error('title') <span class="mt-1 text-xs text-red-400">{{ $message }}</span> @enderror
+                        @error('descripcion_lenguaje') <span class="mt-1 text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                     <div>
                         <label class="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-500">Imagen</label>
-                        <input type="file" wire:model="ruta" class="w-full text-slate-400">
-                        @error('ruta') <span class="mt-1 text-xs text-red-400">{{ $message }}</span> @enderror
-                        @if ($ruta)
-                        <img src="{{ $ruta->temporaryUrl() }}" class="mt-3 h-16 w-16 rounded-full object-cover ring-2 ring-cyan-400/30">
+                        <input type="file" wire:model="ruta_lenguaje" class="w-full text-slate-400">
+                        @error('ruta_lenguaje') <span class="mt-1 text-xs text-red-400">{{ $message }}</span> @enderror
+                        @if ($ruta_lenguaje)
+                        <img src="{{ $ruta_lenguaje->temporaryUrl() }}" class="mt-3 h-16 w-16 rounded-full object-cover ring-2 ring-cyan-400/30">
                         @elseif($currentImg)
                         <img src="{{ asset('storage/'.$currentImg) }}" class="mt-3 h-16 w-16 rounded-full object-cover ring-2 ring-cyan-400/30">
                         @endif
                     </div>
                 </div>
 
-                <div class="mt-4">
-                    <label class="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-500">Descripción</label>
-                    <textarea wire:model="descripcion" rows="3"
-                        class="w-full rounded-md border border-cyan-400/10 bg-black/20 px-4 py-3 text-white outline-none transition focus:border-cyan-300"></textarea>
-                </div>
-
-                <div class="mt-4 grid gap-4 sm:grid-cols-2">
-                    <div>
-                        <label class="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-500">Link</label>
-                        <input type="text" wire:model="link"
-                            class="w-full rounded-md border border-cyan-400/10 bg-black/20 px-4 py-3 text-white outline-none transition focus:border-cyan-300">
-                        @error('link') <span class="mt-1 text-xs text-red-400">{{ $message }}</span> @enderror
-                    </div>
-
-                </div>
-
                 <div class="mt-5 flex gap-3">
-                    <button wire:click="guardarProject"
+                    <button wire:click="guardar"
                         class="rounded-md bg-cyan-400 px-6 py-2 text-sm font-black text-[#05111f] transition hover:bg-cyan-300">
-                        {{ $ProjectId ? 'Actualizar' : 'Agregar' }}
+                        {{ $Id ? 'Actualizar' : 'Agregar' }}
                     </button>
                     <button wire:click="toggleForm"
                         class="rounded-md border border-cyan-400/20 px-6 py-2 text-sm font-bold text-slate-400 transition hover:border-cyan-300 hover:text-white">
@@ -136,30 +120,29 @@
 
             <!-- LISTADO -->
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                @forelse ($Projects as $p)
+                @forelse ($Lenguaje as $l)
                 <div class="flex items-start justify-between rounded-md border border-cyan-400/10 bg-black/20 p-5 transition hover:border-cyan-400/30">
                     <div class="flex items-start gap-4">
-                        @if ($p->ruta)
-                        <img src="{{ asset('storage/'.$p->ruta) }}" class="h-12 w-12 rounded-md object-cover ring-2 ring-cyan-400/20">
+                        @if ($l->ruta_lenguaje)
+                        <img src="{{ asset('storage/'.$l->ruta_lenguaje) }}" class="h-12 w-12 rounded-md object-cover ring-2 ring-cyan-400/20">
                         @else
                         <div class="flex h-12 w-12 items-center justify-center rounded-md bg-cyan-400/10 text-sm font-black text-cyan-300 ring-2 ring-cyan-400/20">
-                            {{ collect(explode(' ', $p->title))->map(fn($p) => mb_substr($p, 0, 1))->take(2)->implode('') }}
+                            {{ collect(explode(' ', $l->descripcion_lenguaje))->map(fn($l) => mb_substr($l, 0, 1))->take(2)->implode('') }}
                         </div>
                         @endif
                         <div>
-                            <p class="font-bold text-white">{{ $p->title }}</p>
-                            <p class="text-sm text-slate-400">{{ $p->descripcion }}</p>
+                            <p class="text-sm text-slate-400">{{ $l->descripcion_lenguaje }}</p>
                         </div>
                     </div>
                     <div class="flex flex-col items-end gap-2 text-xs">
-                        <button wire:click="actualizarProject({{ $p->idproject }})" class="font-semibold text-cyan-400 transition hover:text-cyan-300">Editar</button>
-                        <button wire:click="confirmarEliminar({{ $p->idproject }})"
+                        <button wire:click="actualizar({{ $l->idlenguaje }})" class="font-semibold text-cyan-400 transition hover:text-cyan-300">Editar</button>
+                        <button wire:click="confirmarEliminar({{ $l->idlenguaje }})"
                             class="font-semibold text-red-400 transition hover:text-red-300">Eliminar</button>
                     </div>
                 </div>
                 @empty
                 <div class="col-span-full py-12 text-center">
-                    <p class="text-slate-500">Aún no hay proyectos registrados.</p>
+                    <p class="text-slate-500">Aún no hay lenguajes registrados.</p>
                     <button wire:click="toggleForm" class="mt-4 text-sm font-bold text-cyan-400 hover:text-cyan-300">
                         + Agregar el primero
                     </button>
@@ -194,10 +177,10 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
             </div>
-            <p class="text-sm font-bold text-white">¿Eliminar a {{ $deleteProject }}?</p>
+            <p class="text-sm font-bold text-white">¿Eliminar a {{ $deleteLenguaje }}?</p>
             <p class="mt-1 text-xs text-slate-500">Esta acción no se puede deshacer.</p>
             <div class="mt-4 flex justify-center gap-3">
-                <button wire:click="eliminarProject({{ $deleteId }})"
+                <button wire:click="eliminar({{ $deleteId }})"
                     class="rounded-md bg-red-500 px-5 py-1.5 text-xs font-black text-white transition hover:bg-red-400">
                     Eliminar
                 </button>
