@@ -2,7 +2,7 @@
     <header class="border-b border-cyan-400/10 bg-[#050716]">
         <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-10">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                <span class="flex h-9 w-9 items-center justify-center rounded-md bg-cyan-400 text-lg font-black text-[#06111f]">&gt;_</span>
+                <span class="logo-terminal flex h-9 w-9 items-center justify-center rounded-md bg-cyan-400 text-lg font-black text-[#06111f]" aria-hidden="true">&gt;<span class="logo-terminal-cursor">_</span></span>
                 <span class="text-lg font-black">Sys<span class="text-cyan-400">Core</span> Admin</span>
             </a>
             <div class="flex items-center gap-3">
@@ -94,11 +94,11 @@
                     </div>
                     <div>
                         <label class="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-500">Imagen</label>
-                        <input type="file" wire:model="ruta" class="w-full text-slate-400">
+                        <input type="file" wire:model="ruta" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" class="w-full text-slate-400">
                         @error('ruta') <span class="mt-1 text-xs text-red-400">{{ $message }}</span> @enderror
                         @if ($ruta)
                         <img src="{{ $ruta->temporaryUrl() }}" class="mt-3 h-16 w-16 rounded-full object-cover ring-2 ring-cyan-400/30">
-                        @elseif($currentImg)
+                        @elseif($currentImg && \Illuminate\Support\Facades\Storage::disk('public')->exists($currentImg))
                         <img src="{{ asset('storage/'.$currentImg) }}" class="mt-3 h-16 w-16 rounded-full object-cover ring-2 ring-cyan-400/30">
                         @endif
                     </div>
@@ -120,6 +120,71 @@
 
                 </div>
 
+                <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                    <div>
+                        <label class="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-500">Lenguajes</label>
+
+                        <div class="grid grid-cols-3 gap-2">
+                            @foreach($lenguajes as $lenguaje)
+                            <label class="flex items-center gap-2" for="lenguaje-{{ $lenguaje->idlenguaje }}">
+                                <input
+                                    type="checkbox"
+                                    value="{{ $lenguaje->idlenguaje }}"
+                                    wire:model="lenguajesSeleccionados"
+                                    id="lenguaje-{{ $lenguaje->idlenguaje }}">
+
+                                <span>
+                                    {{ $lenguaje->descripcion_lenguaje }}
+                                </span>
+                            </label>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div>
+                        <label class="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-500">Librerías</label>
+
+                        <div class="grid grid-cols-3 gap-2">
+                            @foreach($librerias as $libreria)
+
+                            <label class="flex items-center gap-2" for="libreria-{{ $libreria->idlibreria }}">
+                                <input
+                                    type="checkbox"
+                                    value="{{ $libreria->idlibreria }}"
+                                    wire:model="libreriasSeleccionadas"
+                                    id="libreria-{{ $libreria->idlibreria }}">
+
+                                <span>
+                                    {{ $libreria->descripcion_libreria }}
+                                </span>
+                            </label>
+
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-xs font-semibold uppercase tracking-wider text-slate-500">Librerías CSS</label>
+
+                        <div class="grid grid-cols-3 gap-2">
+                            @foreach($libreriascss as $css)
+
+                            <label class="flex items-center gap-2" for="css-{{ $lenguaje->idlenguaje }}">
+                                <input
+                                    type="checkbox"
+                                    value="{{ $css->idlibreriacss }}"
+                                    wire:model="libreriasCssSeleccionadas"
+                                    id="css-{{ $css->idlibreriacss }}">
+
+                                <span>
+                                    {{ $css->descripcion_libreriacss }}
+                                </span>
+                            </label>
+                            @endforeach
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="mt-5 flex gap-3">
                     <button wire:click="guardarProject"
                         class="rounded-md bg-cyan-400 px-6 py-2 text-sm font-black text-[#05111f] transition hover:bg-cyan-300">
@@ -139,7 +204,7 @@
                 @forelse ($Projects as $p)
                 <div class="flex items-start justify-between rounded-md border border-cyan-400/10 bg-black/20 p-5 transition hover:border-cyan-400/30">
                     <div class="flex items-start gap-4">
-                        @if ($p->ruta)
+                        @if ($p->ruta && \Illuminate\Support\Facades\Storage::disk('public')->exists($p->ruta))
                         <img src="{{ asset('storage/'.$p->ruta) }}" class="h-12 w-12 rounded-md object-cover ring-2 ring-cyan-400/20">
                         @else
                         <div class="flex h-12 w-12 items-center justify-center rounded-md bg-cyan-400/10 text-sm font-black text-cyan-300 ring-2 ring-cyan-400/20">
@@ -149,6 +214,35 @@
                         <div>
                             <p class="font-bold text-white">{{ $p->title }}</p>
                             <p class="text-sm text-slate-400">{{ $p->descripcion }}</p>
+                            <ul class="flex flex-wrap gap-4">
+                                @foreach($p['lenguajes'] as $lenguaje)
+                                <li>
+                                    <button class="flex items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] p-3 transition hover:border-cyan-400 hover:bg-cyan-500/10">
+
+                                        <x-tech-icon :path="$lenguaje['ruta_lenguaje']" :name="$lenguaje['descripcion_lenguaje']" />
+
+                                    </button>
+                                </li>
+                                @endforeach
+                                @foreach($p->librerias as $libreria)
+                                <li>
+                                    <button class="flex items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] p-3 transition hover:border-cyan-400 hover:bg-cyan-500/10">
+
+                                        <x-tech-icon :path="$libreria['ruta_libreria']" :name="$libreria['descripcion_libreria']" />
+
+                                    </button>
+                                </li>
+                                @endforeach
+                                @foreach($p->libreriascss as $css)
+                                <li>
+                                    <button class="flex items-center justify-center rounded-lg border border-cyan-400/20 bg-[#030712] p-3 transition hover:border-cyan-400 hover:bg-cyan-500/10">
+
+                                        <x-tech-icon :path="$css['ruta_libreriacss']" :name="$css['descripcion_libreriacss']" />
+
+                                    </button>
+                                </li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                     <div class="flex flex-col items-end gap-2 text-xs">
@@ -197,7 +291,7 @@
             <p class="text-sm font-bold text-white">¿Eliminar a {{ $deleteProject }}?</p>
             <p class="mt-1 text-xs text-slate-500">Esta acción no se puede deshacer.</p>
             <div class="mt-4 flex justify-center gap-3">
-                <button wire:click="eliminarProject({{ $deleteId }})"
+                <button wire:click="eliminarProject"
                     class="rounded-md bg-red-500 px-5 py-1.5 text-xs font-black text-white transition hover:bg-red-400">
                     Eliminar
                 </button>

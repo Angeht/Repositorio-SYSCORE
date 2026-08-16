@@ -20,15 +20,25 @@ class DatabaseSeeder extends Seeder
             LibreriasCssSeeder::class,
             LenguajesSeeder::class,
             ProjectsSeeder::class,
+            ProjectsLengSeeder::class,
+            ProjectsLibrecssSeeder::class,
+            ProjectsLibreSeeder::class,
         ]);
 
-        $this->call(UserRoleSeeder::class);
+        if (app()->environment(['local', 'testing'])) {
+            $this->call(UserRoleSeeder::class);
+        }
 
         $this->call(RoleSeeder::class);
+        $this->call(EquipoSeeder::class);
 
+        SiteContent::query()
+            ->where('page', 'equipo')
+            ->where('section', 'main')
+            ->delete();
 
         foreach ($this->siteContents() as $content) {
-            SiteContent::firstOrCreate(
+            SiteContent::updateOrCreate(
                 ['page' => $content['page'], 'section' => $content['section']],
                 $content
             );
@@ -122,15 +132,6 @@ class DatabaseSeeder extends Seeder
                 'items' => ['Laravel', 'Livewire', 'PHP', 'MySQL', 'Tailwind CSS', 'JavaScript', 'Git', 'Vite'],
                 'sort_order' => 1,
             ],
-              [
-                'page' => 'equipo',
-                'section' => 'main',
-                'title' => 'Stack de desarrollo.',
-                'subtitle' => 'Tecnologias',
-                'body' => 'Usamos herramientas modernas para construir sistemas rapidos, escalables y faciles de mantener.',
-                'items' => ['Laravel', 'Livewire', 'PHP', 'MySQL', 'Tailwind CSS', 'JavaScript', 'Git', 'Vite'],
-                'sort_order' => 1,
-            ],
             [
                 'page' => 'team',
                 'section' => 'main',
@@ -152,7 +153,7 @@ class DatabaseSeeder extends Seeder
                 'body' => 'Cuentanos que proceso quieres mejorar y revisamos como convertirlo en una solucion digital.',
                 'items' => [
                     'email' => 'contacto@syscore.dev',
-                    'location' => 'Colombia',
+                    'location' => 'Perú',
                     'response' => '24 a 48 horas',
                 ],
                 'sort_order' => 1,

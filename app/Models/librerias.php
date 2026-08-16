@@ -11,12 +11,24 @@ class librerias extends Model
     protected $primaryKey = 'idlibreria';
 
     public $incrementing = true;
-    
+
     protected $keyType = 'int';
 
     protected $fillable = [
         'descripcion_libreria',
         'formato_libreria',
-        'ruta_libreria'
+        'ruta_libreria',
     ];
+
+    public function Projects()
+    {
+        return $this->belongsToMany(
+            Project::class,
+            'projects_libres',
+            'fr_librerias',
+            'fr_projects',
+            'idlibreria',
+            'idproject'
+        );
+    }
 }

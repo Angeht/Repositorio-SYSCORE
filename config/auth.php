@@ -20,6 +20,11 @@ return [
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
+    'admin' => [
+        'email' => env('ADMIN_EMAIL', 'admin@syscore.dev'),
+        'password' => env('ADMIN_PASSWORD'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards

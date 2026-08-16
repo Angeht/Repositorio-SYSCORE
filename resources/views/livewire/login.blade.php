@@ -20,7 +20,7 @@
                 <p class="mb-4 text-xs font-bold uppercase tracking-[0.35em] text-cyan-300">Iniciar sesion</p>
                 <h2 class="text-4xl font-black text-white">Accede al sistema</h2>
                 <p class="mt-4 leading-7 text-slate-400">
-                    Esta pantalla queda lista para conectar la autenticacion real de administradores.
+                    Ingresa con una cuenta autorizada para administrar el contenido del sitio.
                 </p>
 
                 <form wire:submit.prevent="login" class="mt-10">

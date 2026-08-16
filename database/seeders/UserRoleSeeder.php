@@ -18,6 +18,10 @@ class UserRoleSeeder extends Seeder
      */
     public function run(): void
     {
+        if (! app()->environment(['local', 'testing'])) {
+            return;
+        }
+
         foreach ($this->users() as $user) {
             User::updateOrCreate(
                 ['email' => $user['email']],

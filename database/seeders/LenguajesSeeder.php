@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\lenguajes;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LenguajesSeeder extends Seeder
@@ -36,16 +35,14 @@ class LenguajesSeeder extends Seeder
             'img/lenguajes/typescript.ico',
         ];
 
-        for ($i=1; $i < count($lenguajes) ; $i++) { 
-            # code...
-        }
-
-        foreach ($lenguajes as $i =>$leng) {
-            $lenguaje = new lenguajes();
-            $lenguaje->descripcion_lenguaje=$leng;
-            $lenguaje->formato_lenguaje=$formato[$i];
-            $lenguaje->ruta_lenguaje=$ruta[$i];
-            $lenguaje->save();
+        foreach ($lenguajes as $i => $leng) {
+            lenguajes::updateOrCreate(
+                ['descripcion_lenguaje' => $leng],
+                [
+                    'formato_lenguaje' => $formato[$i],
+                    'ruta_lenguaje' => $ruta[$i],
+                ],
+            );
         }
     }
 }

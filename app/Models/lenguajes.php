@@ -19,4 +19,16 @@ class lenguajes extends Model
         'formato_lenguaje',
         'ruta_lenguaje',
     ];
+
+    public function Projects()
+    {
+        return $this->belongsToMany(
+            Project::class,
+            'projects_lengs',
+            'fr_lenguajes',
+            'fr_projects',
+            'idlenguaje',
+            'idproject'
+        );
+    }
 }

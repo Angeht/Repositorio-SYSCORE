@@ -6,8 +6,8 @@
         <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr]">
             <div>
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-3">
-                    <span class="flex h-10 w-10 items-center justify-center rounded-md bg-cyan-400 text-lg font-black text-[#06111f] shadow-[0_0_28px_rgba(34,211,238,.28)]">
-                        &gt;_
+                    <span class="logo-terminal flex h-10 w-10 items-center justify-center rounded-md bg-cyan-400 text-lg font-black text-[#06111f] shadow-[0_0_28px_rgba(34,211,238,.28)]" aria-hidden="true">
+                        &gt;<span class="logo-terminal-cursor">_</span>
                     </span>
                     <span class="text-xl font-black tracking-tight text-white">
                         Sys<span class="text-cyan-400">Core</span>
@@ -34,7 +34,6 @@
                 <div class="mt-5 space-y-3 text-sm font-semibold text-slate-500">
                     <a href="{{ route('technologies') }}" class="block transition hover:text-cyan-300">Tecnologias</a>
                     <a href="{{ route('team') }}" class="block transition hover:text-cyan-300">Equipo</a>
-                    <a href="{{ route('join') }}" class="block transition hover:text-cyan-300">Unete</a>
                     <a href="{{ route('login') }}" class="block transition hover:text-cyan-300">Iniciar sesion</a>
                 </div>
             </div>
@@ -43,7 +42,7 @@
                 <h3 class="text-xs font-black uppercase tracking-[0.28em] text-cyan-300">Contacto</h3>
                 <div class="mt-5 space-y-3 text-sm text-slate-500">
                     <p><span class="font-bold text-slate-300">Correo:</span> contacto@syscore.dev</p>
-                    <p><span class="font-bold text-slate-300">Ubicacion:</span> Colombia</p>
+                    <p><span class="font-bold text-slate-300">Ubicacion:</span> Perú</p>
                     <a href="{{ route('contact') }}" class="inline-flex rounded-md border border-cyan-400/25 px-4 py-2 font-black text-cyan-300 transition hover:bg-cyan-400/10">
                         Escribir mensaje
                     </a>
