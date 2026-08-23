@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\librerias;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibreriasSeeder extends Seeder
@@ -34,7 +33,7 @@ class LibreriasSeeder extends Seeder
             'png',
             'png',
             'png',
-            'png'
+            'png',
         ];
         $ruta = [
             'img/librerias/Laravel.jpg',
@@ -45,15 +44,17 @@ class LibreriasSeeder extends Seeder
             'img/librerias/Flask.png',
             'img/librerias/Spring.png',
             'img/librerias/ExpressJS.png',
-            'img/librerias/RubyOnRails.png'
+            'img/librerias/RubyOnRails.png',
         ];
 
-        foreach ($librerias as $i =>$lib) {
-            $libreria = new librerias();
-            $libreria->descripcion_libreria=$lib;
-            $libreria->formato_libreria=$formato[$i];
-            $libreria->ruta_libreria=$ruta[$i];
-            $libreria->save();
+        foreach ($librerias as $i => $lib) {
+            librerias::updateOrCreate(
+                ['descripcion_libreria' => $lib],
+                [
+                    'formato_libreria' => $formato[$i],
+                    'ruta_libreria' => $ruta[$i],
+                ],
+            );
         }
     }
 }

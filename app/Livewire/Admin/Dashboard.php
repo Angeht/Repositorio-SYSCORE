@@ -75,7 +75,16 @@ class Dashboard extends Component
             'subtitle' => ['nullable', 'string', 'max:255'],
             'body' => ['nullable', 'string'],
             'button_text' => ['nullable', 'string', 'max:255'],
-            'button_url' => ['nullable', 'string', 'max:255'],
+            'button_url' => [
+                'nullable',
+                'string',
+                'max:255',
+                function (string $attribute, mixed $value, \Closure $fail): void {
+                    if (! $this->isSafeUrl((string) $value)) {
+                        $fail('La URL debe ser una ruta interna o un enlace HTTP/HTTPS.');
+                    }
+                },
+            ],
             'items' => ['nullable', 'json'],
         ]);
 
@@ -112,6 +121,21 @@ class Dashboard extends Component
         }
 
         return redirect()->route('login');
+    }
+
+    private function isSafeUrl(string $url): bool
+    {
+        if ($url === '') {
+            return true;
+        }
+
+        if (str_starts_with($url, '/') && ! str_starts_with($url, '//')) {
+            return true;
+        }
+
+        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+
+        return in_array($scheme, ['http', 'https'], true) && filter_var($url, FILTER_VALIDATE_URL) !== false;
     }
 
     public function render()

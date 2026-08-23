@@ -156,9 +156,6 @@
                         <a href="{{ route('contact') }}" class="rounded-md bg-cyan-400 px-6 py-3 text-sm font-black text-[#05111f] shadow-[0_0_28px_rgba(34,211,238,.28)] transition hover:bg-cyan-300">
                             Contactar
                         </a>
-                        <a href="{{ route('join') }}" class="rounded-md border border-cyan-400/30 px-6 py-3 text-sm font-bold text-cyan-300 transition hover:border-cyan-300 hover:bg-cyan-400/10">
-                            Unirme al equipo
-                        </a>
                     </div>
                 </div>
             </div>

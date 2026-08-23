@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\librerias_css;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LibreriasCssSeeder extends Seeder
@@ -34,7 +33,7 @@ class LibreriasCssSeeder extends Seeder
             'webp',
             'png',
             'png',
-            'webp'
+            'webp',
         ];
         $ruta = [
             'img/libreriascss/bootstrap.ico',
@@ -45,16 +44,17 @@ class LibreriasCssSeeder extends Seeder
             'img/libreriascss/semanticui.webp',
             'img/libreriascss/Uikit.png',
             'img/libreriascss/PureCss.png',
-            'img/libreriascss/skeleton.webp'
+            'img/libreriascss/skeleton.webp',
         ];
 
         foreach ($libreriasCss as $i => $css) {
-            $libreiaCss = new librerias_css();
-            $libreiaCss->descripcion_libreriacss=$css;
-            $libreiaCss->formato_libreriacss=$formato[$i];
-            $libreiaCss->ruta_libreriacss=$ruta[$i];
-            $libreiaCss->save();
+            librerias_css::updateOrCreate(
+                ['descripcion_libreriacss' => $css],
+                [
+                    'formato_libreriacss' => $formato[$i],
+                    'ruta_libreriacss' => $ruta[$i],
+                ],
+            );
         }
     }
-
 }

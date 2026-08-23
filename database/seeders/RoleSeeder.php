@@ -9,8 +9,8 @@ class RoleSeeder extends Seeder
 {
     public function run(): void
     {
-        $adminEmail = (string) env('ADMIN_EMAIL', 'admin@syscore.dev');
-        $adminPassword = env('ADMIN_PASSWORD');
+        $adminEmail = (string) config('auth.admin.email');
+        $adminPassword = config('auth.admin.password');
 
         if (! is_string($adminPassword) || $adminPassword === '') {
             if (app()->environment(['local', 'testing'])) {

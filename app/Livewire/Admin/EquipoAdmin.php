@@ -3,15 +3,31 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Equipo;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Throwable;
 
 class EquipoAdmin extends Component
 {
     use WithFileUploads;
 
-    public $nombre, $cargo, $descripcion, $linkedin, $github, $orden = 0;
+    public $nombre;
+
+    public $cargo;
+
+    public $descripcion;
+
+    public $linkedin;
+
+    public $github;
+
+    public $orden = 0;
+
     public $foto;
+
+    public $currentFoto;
+
     public $editId = null;
 
     public $miembros;
@@ -19,10 +35,13 @@ class EquipoAdmin extends Component
     public $showForm = false;
 
     public $showModal = false;
+
     public $modalMessage = '';
 
     public $showDeleteModal = false;
+
     public $deleteId = null;
+
     public $deleteNombre = '';
 
     public function mount()
@@ -49,15 +68,17 @@ class EquipoAdmin extends Component
             'nombre' => 'required|string|max:100',
             'cargo' => 'required|string|max:100',
             'descripcion' => 'nullable|string',
-            'linkedin' => 'nullable|url',
-            'github' => 'nullable|url',
-            'foto' => 'nullable|image|max:2048',
+            'linkedin' => 'nullable|url:http,https|max:2048',
+            'github' => 'nullable|url:http,https|max:2048',
+            'orden' => 'required|integer|min:0|max:999',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ], [
             'nombre.required' => 'El nombre es obligatorio.',
             'cargo.required' => 'El cargo es obligatorio.',
             'linkedin.url' => 'El LinkedIn debe ser una URL válida (ej: https://linkedin.com/in/...)',
             'github.url' => 'El GitHub debe ser una URL válida (ej: https://github.com/...)',
             'foto.image' => 'El archivo debe ser una imagen.',
+            'foto.mimes' => 'La imagen debe ser JPG, PNG o WEBP.',
             'foto.max' => 'La imagen no debe superar 2MB.',
         ]);
 
@@ -70,16 +91,28 @@ class EquipoAdmin extends Component
             'orden' => $this->orden,
         ];
 
+        $esEdicion = (bool) $this->editId;
+        $miembro = $esEdicion ? Equipo::findOrFail($this->editId) : new Equipo;
+        $oldPath = $miembro->exists ? $miembro->foto : null;
+        $newPath = null;
+
         if ($this->foto) {
-            $data['foto'] = $this->foto->store('equipo', 'public');
+            $newPath = $this->foto->store('equipo', 'public');
+            $data['foto'] = $newPath;
         }
 
-        $esEdicion = (bool) $this->editId;
+        try {
+            $miembro->fill($data)->save();
+        } catch (Throwable $exception) {
+            if ($newPath) {
+                Storage::disk('public')->delete($newPath);
+            }
 
-        if ($esEdicion) {
-            Equipo::find($this->editId)->update($data);
-        } else {
-            Equipo::create($data);
+            throw $exception;
+        }
+
+        if ($newPath && $oldPath && $oldPath !== $newPath) {
+            Storage::disk('public')->delete($oldPath);
         }
 
         $this->resetForm();
@@ -90,7 +123,7 @@ class EquipoAdmin extends Component
 
     public function editar($id)
     {
-        $m = Equipo::find($id);
+        $m = Equipo::findOrFail($id);
         $this->editId = $id;
         $this->nombre = $m->nombre;
         $this->cargo = $m->cargo;
@@ -98,20 +131,28 @@ class EquipoAdmin extends Component
         $this->linkedin = $m->linkedin;
         $this->github = $m->github;
         $this->orden = $m->orden;
+        $this->currentFoto = $m->foto;
         $this->showForm = true;
     }
 
     public function confirmarEliminar($id)
     {
-        $m = Equipo::find($id);
+        $m = Equipo::findOrFail($id);
         $this->deleteId = $id;
         $this->deleteNombre = $m->nombre;
         $this->showDeleteModal = true;
     }
 
-    public function eliminar($id)
+    public function eliminar(): void
     {
-        Equipo::find($id)->delete();
+        $miembro = Equipo::findOrFail($this->deleteId);
+        $imagePath = $miembro->foto;
+        $miembro->delete();
+
+        if ($imagePath) {
+            Storage::disk('public')->delete($imagePath);
+        }
+
         $this->showDeleteModal = false;
         $this->deleteId = null;
         $this->cargarMiembros();
@@ -126,14 +167,14 @@ class EquipoAdmin extends Component
 
     public function toggleActivo($id)
     {
-        $m = Equipo::find($id);
+        $m = Equipo::findOrFail($id);
         $m->update(['activo' => ! $m->activo]);
         $this->cargarMiembros();
     }
 
     public function resetForm()
     {
-        $this->reset(['nombre', 'cargo', 'descripcion', 'linkedin', 'github', 'foto', 'editId']);
+        $this->reset(['nombre', 'cargo', 'descripcion', 'linkedin', 'github', 'foto', 'currentFoto', 'editId']);
         $this->orden = 0;
     }
 
@@ -147,6 +188,7 @@ class EquipoAdmin extends Component
     {
         $this->showModal = false;
     }
+
     public function render()
     {
         return view('livewire.admin.equipo_admin');

@@ -13,11 +13,12 @@ class Services extends Component
 
     public function render()
     {
-         return view('livewire.services', [
-             'content' => $this->content('services'),
-         ]);
+        return view('livewire.services', [
+            'content' => $this->content('services'),
+        ]);
         // dd($this->content('services'));
     }
+
     public function next()
     {
         $items = $this->content('services')['items'] ?? [];
@@ -52,7 +53,4 @@ class Services extends Component
     }
 
     public string $direction = 'next';
-
-
-
 }

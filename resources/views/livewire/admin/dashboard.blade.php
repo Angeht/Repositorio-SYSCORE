@@ -2,8 +2,8 @@
     <header class="border-b border-cyan-400/10 bg-[#050716]">
         <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-10">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                <span class="flex h-9 w-9 items-center justify-center rounded-md bg-cyan-400 text-lg font-black text-[#06111f]">
-                    &gt;_
+                <span class="logo-terminal flex h-9 w-9 items-center justify-center rounded-md bg-cyan-400 text-lg font-black text-[#06111f]" aria-hidden="true">
+                    &gt;<span class="logo-terminal-cursor">_</span>
                 </span>
                 <span class="text-lg font-black">Sys<span class="text-cyan-400">Core</span> Admin</span>
             </a>
